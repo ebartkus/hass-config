@@ -5,56 +5,70 @@
     entity_id: binary_sensor.motion_sensor_158d000251fc59
     to: 'on'
   condition:
-    - condition: time
-      after: '07:00:00'
-      before: '01:00:00' 
+  - condition: time
+    after: 07:00:00
+    before: 01:00:00
   action:
-    - service: homeassistant.turn_on
-      entity_id: switch.fibaro_system_fgs223_double_relay_switch_4
-    - service: automation.turn_on
-      data:
-        entity_id: automation.MOTION_OFF
-
+  - service: homeassistant.turn_on
+    entity_id: switch.fibaro_system_fgs223_double_relay_switch_4
+  - service: automation.turn_on
+    data:
+      entity_id: automation.MOTION_OFF
 - id: '1534274731984'
   alias: If there no motion for 1 minutes turn off the closet light
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d000251fc59
     to: 'off'
-    for: '00:01:00'
+    for: 00:01:00
   action:
-    - service: homeassistant.turn_off
-      entity_id: switch.fibaro_system_fgs223_double_relay_switch_4
-    - service: automation.turn_off
-      data:
-        entity_id: automation.Motion_off
-
+  - service: homeassistant.turn_off
+    entity_id: switch.fibaro_system_fgs223_double_relay_switch_4
+  - service: automation.turn_off
+    data:
+      entity_id: automation.Motion_off
 - id: '1534274731985'
-  alias: "bathroom fan start"
+  alias: bathroom fan start
   trigger:
-    - platform: state
-      entity_id: binary_sensor.bathroom_humidity_rising
-      to: 'on'
+  - platform: state
+    entity_id: binary_sensor.bathroom_humidity_rising
+    to: 'on'
   condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.bathroom_humidity_rising
-          state: 'on'
-        - condition: time
-          after: '08:00:00'
-          before: '00:00:00'            
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.bathroom_humidity_rising
+      state: 'on'
+    - condition: time
+      after: 08:00:00
+      before: 00:00:00
   action:
     service: homeassistant.turn_on
     entity_id: switch.aeotec_zw140_dual_nano_switch_switch_4
-
 - id: '1534274731985'
-  alias: "bathroom fan autostop"
+  alias: bathroom fan autostop
   trigger:
-    - platform: state
-      entity_id: switch.aeotec_zw140_dual_nano_switch_switch_4
-      to: 'on'
-      for: '00:20:00'      
+  - platform: state
+    entity_id: switch.aeotec_zw140_dual_nano_switch_switch_4
+    to: 'on'
+    for: 00:20:00
   action:
     service: homeassistant.turn_off
-    entity_id: switch.aeotec_zw140_dual_nano_switch_switch_4    
+    entity_id: switch.aeotec_zw140_dual_nano_switch_switch_4
+- id: '1534670012924'
+  alias: Door opened
+  trigger:
+  - entity_id: binary_sensor.door_window_sensor_158d000267446c
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: 07:00
+    before: 00:00
+    condition: time
+  action:
+  - data:
+      gw_mac: 7c49eb17b2b4
+      ringtone_id: 10
+      ringtone_vol: 30
+    service: xiaomi_aqara.play_ringtone
