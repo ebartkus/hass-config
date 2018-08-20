@@ -1,9 +1,17 @@
 language: python
 python:
-  - "3.5"
-before_install:
-  - mv secrets_travis.yaml secrets.yaml
+  - "3.7"
+
 install:
-  - pip3 install homeassistant
+  - make setup
+
 script:
-  - hass -c . --script check_config
+  - make test
+
+branches:
+  only: master
+
+notifications:
+    email:
+        on_success: never
+        on_failure: change
