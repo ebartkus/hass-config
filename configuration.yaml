@@ -149,6 +149,13 @@ media_player:
     timeout: 5
     show_all_sources: False 
 
+influxdb:
+  host: 10.20.30.105
+
+recorder:
+  purge_keep_days: 30
+  db_url: !secret mariadb
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml

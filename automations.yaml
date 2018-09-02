@@ -2,7 +2,7 @@
   alias: If there is motion turn on the closet light
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    entity_id: binary_sensor.motion_sensor_158d0001f9d427
     to: 'on'
   condition:
   - condition: time
@@ -18,7 +18,7 @@
   alias: If there no motion for 1 minutes turn off the closet light
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    entity_id: binary_sensor.motion_sensor_158d0001f9d427
     to: 'off'
     for: 00:01:00
   action:
@@ -27,6 +27,35 @@
   - service: automation.turn_off
     data:
       entity_id: automation.Motion_off
+- id: '1534274731983'
+  alias: If there is motion turn on the bathroom light
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    to: 'on'
+  condition:
+  - condition: time
+    after: 07:00:00
+    before: 01:00:00
+  action:
+  - service: homeassistant.turn_on
+    entity_id: switch.aeotec_zw140_dual_nano_switch_switch_5
+  - service: automation.turn_on
+    data:
+      entity_id: automation.MOTION_OFF
+- id: '1534274731984'
+  alias: If there no motion for 5 minutes turn off the bathroom light
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    to: 'off'
+    for: 00:05:00
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.aeotec_zw140_dual_nano_switch_switch_5
+  - service: automation.turn_off
+    data:
+      entity_id: automation.Motion_off      
 - id: '1534274731985'
   alias: bathroom fan start
   trigger:
