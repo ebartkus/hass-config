@@ -21,9 +21,15 @@ config:
 
 http:
   # Secrets are defined in the file secrets.yaml
-  # api_password: !secret http_password
+  api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
+  trusted_networks:
+    - 127.0.0.1
+    - 10.20.30.0/24
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -63,7 +69,7 @@ cloud:
 
 zwave:
   usb_path: /dev/ttyACM0
-  network_key: !secret zwave_network_key
+  # network_key: !secret zwave_network_key
 
 mqtt:
   broker: !secret mqtt_broker 
@@ -155,6 +161,21 @@ influxdb:
 recorder:
   purge_keep_days: 30
   db_url: !secret mariadb
+
+panel_iframe:
+ nodered:
+   title: 'Node-Red'
+   icon: 'mdi:shuffle-variant'
+   url: !secret nodered
+
+device_tracker:
+  - platform: unifi
+    host: !secret hass_unifi_host
+    username: hass
+    password: !secret hass_unifi_pass
+    ssid_filter:
+      - 'arronlt5g'
+      - 'aaronlt_jc'
 
 group: !include groups.yaml
 automation: !include automations.yaml
