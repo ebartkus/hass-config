@@ -1,19 +1,19 @@
 - id: '1534274731983'
   alias: If there is motion turn on the closet light
   trigger:
+  - entity_id: binary_sensor.motion_sensor_158d0001f9d427
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d0001f9d427
     to: 'on'
   condition:
-  - condition: time
-    after: 07:00:00
-    before: 01:00:00
+  - after: '06:00:00'
+    before: '01:00:00'
+    condition: time
   action:
-  - service: homeassistant.turn_on
-    entity_id: switch.fibaro_system_fgs223_double_relay_switch_2
-  - service: automation.turn_on
-    data:
+  - entity_id: switch.fibaro_system_fgs223_double_relay_switch_2
+    service: homeassistant.turn_on
+  - data:
       entity_id: automation.MOTION_OFF
+    service: automation.turn_on
 - id: '1534274731984'
   alias: If there no motion for 1 minutes turn off the closet light
   trigger:
@@ -31,12 +31,12 @@
   alias: If there is motion turn on the bathroom light
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
     to: 'on'
   condition:
   - condition: time
-    after: 07:00:00
-    before: 01:00:00
+    after: '06:00:00'
+    before: '01:00:00'
   action:
   - service: homeassistant.turn_on
     entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
@@ -47,15 +47,19 @@
   alias: If there no motion for 5 minutes turn off the bathroom light
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000251fc59
+    entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
     to: 'off'
     for: 00:05:00
+  condition:
+  - condition: time
+    after: '06:00:00'
+    before: '01:00:00'
   action:
   - service: homeassistant.turn_off
     entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
   - service: automation.turn_off
     data:
-      entity_id: automation.Motion_off      
+      entity_id: automation.Motion_off
 - id: '1534274731985'
   alias: bathroom fan start
   trigger:
@@ -87,17 +91,17 @@
 - id: '1534670012924'
   alias: Door opened
   trigger:
-  - entity_id: binary_sensor.door_window_sensor_158d000267446c
+  - platform: state
+    entity_id: binary_sensor.door_window_sensor_158d000267446c
     from: 'off'
-    platform: state
     to: 'on'
   condition:
-  - after: 07:00
-    before: 00:00
-    condition: time
+  - condition: time
+    after: 07:00:00
+    before: '23:00:00'
   action:
-  - data:
+    service: xiaomi_aqara.play_ringtone
+    data:
       gw_mac: 7c49eb17b2b4
       ringtone_id: 10
-      ringtone_vol: 30
-    service: xiaomi_aqara.play_ringtone
+      ringtone_vol: 10
