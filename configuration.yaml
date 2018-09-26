@@ -31,9 +31,12 @@ http:
   base_url: !secret http_base_url   
   ip_ban_enabled: True
   login_attempts_threshold: 5
-  ssl_certificate: !secret http_cert_path 
-  ssl_key: !secret http_key_path
-  ssl_profile: intermediate
+  use_x_forwarded_for: True
+  cors_allowed_origins: 
+    - https://homeassistant.aaronlt.net
+  trusted_proxies:
+    - 127.0.0.1
+    - 172.26.0.0/16
 
 # Checks for available updates
 # Note: This component will send some information about your system to

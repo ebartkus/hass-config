@@ -49,7 +49,7 @@
     platform: state
     entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
     to: 'off'
-    for: 00:05:00
+    for: 00:10:00
   condition:
   - condition: time
     after: '06:00:00'
