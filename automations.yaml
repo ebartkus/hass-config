@@ -15,51 +15,51 @@
       entity_id: automation.MOTION_OFF
     service: automation.turn_on
 - id: '1534274731984'
-  alias: If there no motion for 1 minutes turn off the closet light
+  alias: If there no motion for 2 minutes turn off the closet light
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d0001f9d427
     to: 'off'
-    for: 00:01:00
+    for: 00:00:10
   action:
   - service: homeassistant.turn_off
     entity_id: switch.fibaro_system_fgs223_double_relay_switch_2
   - service: automation.turn_off
     data:
       entity_id: automation.Motion_off
-- id: '1534274731983'
-  alias: If there is motion turn on the bathroom light
-  trigger:
-    platform: state
-    entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
-    to: 'on'
-  condition:
-  - condition: time
-    after: '06:00:00'
-    before: '01:00:00'
-  action:
-  - service: homeassistant.turn_on
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
-  - service: automation.turn_on
-    data:
-      entity_id: automation.MOTION_OFF
-- id: '1534274731984'
-  alias: If there no motion for 5 minutes turn off the bathroom light
-  trigger:
-    platform: state
-    entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
-    to: 'off'
-    for: 00:10:00
-  condition:
-  - condition: time
-    after: '06:00:00'
-    before: '01:00:00'
-  action:
-  - service: homeassistant.turn_off
-    entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
-  - service: automation.turn_off
-    data:
-      entity_id: automation.Motion_off
+# - id: '1534274731983'
+#   alias: If there is motion turn on the bathroom light
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
+#     to: 'on'
+#   condition:
+#   - condition: time
+#     after: '06:00:00'
+#     before: '01:00:00'
+#   action:
+#   - service: homeassistant.turn_on
+#     entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
+#   - service: automation.turn_on
+#     data:
+#       entity_id: automation.MOTION_OFF
+# - id: '1534274731984'
+#   alias: If there no motion for 10 minutes turn off the bathroom light
+#   trigger:
+#   - platform: state
+#     entity_id: binary_sensor.motion_bathroom_fibaro_1
+#     to: 'off'
+#     for: 00:10:00
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: binary_sensor.motion_bathroom_aqara_1
+#       state: 'off'
+#       for: 00:10:00
+#   action:
+#   - service: homeassistant.turn_off
+#     entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_4
 - id: '1534274731985'
   alias: bathroom fan start
   trigger:
@@ -97,11 +97,11 @@
     to: 'on'
   condition:
   - condition: time
-    after: 07:00:00
+    after: 08:00:00
     before: '23:00:00'
   action:
     service: xiaomi_aqara.play_ringtone
     data:
       gw_mac: 7c49eb17b2b4
       ringtone_id: 10
-      ringtone_vol: 10
+      ringtone_vol: 5

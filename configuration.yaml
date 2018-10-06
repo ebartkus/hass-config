@@ -101,55 +101,57 @@ switch:
 sensor:
   - platform: yr
   - platform: mqtt
-    name: "Temp"
+    name: "livingroom temperature"
+    unique_id: "sensor.livingroom_temperature_1"
     state_topic: "tele/sonoff/SENSOR"
     unit_of_measurement: "°C"
     qos: 1
     value_template: "{{ value_json.AM2301.Temperature }}"
   - platform: mqtt
-    name: "Humidity"
+    name: "livingroom humidity"
+    unique_id: "sensor.livingroom_humidity_1"
     state_topic: "tele/sonoff/SENSOR"
     unit_of_measurement: "%"
     qos: 1
     value_template: "{{ value_json.AM2301.Humidity }}"
-  - platform: filter
-    name: "filtered realistic humidity"
-    entity_id: sensor.Humidity
-    filters:
-      - filter: outlier
-        window_size: 10
-        radius: 4.0
-      - filter: lowpass
-        time_constant: 10
-        precision: 2
-  - platform: filter
-    name: "filtered realistic temperature"
-    entity_id: sensor.Temp
-    filters:
-      - filter: outlier
-        window_size: 10
-        radius: 2.0
-      - filter: lowpass
-        time_constant: 10
-      - filter: time_simple_moving_average
-        window_size: 00:05
-        precision: 2
-  - platform: statistics
-    name: Bathroom Humidity Stats
-    entity_id: sensor.Humidity
-    sampling_size: 5  #todo change tasmota reporting interval.. increase sample sizes
+  # - platform: filter
+  #   name: "filtered realistic humidity"
+  #   entity_id: sensor.Humidity
+  #   filters:
+  #     - filter: outlier
+  #       window_size: 10
+  #       radius: 4.0
+  #     - filter: lowpass
+  #       time_constant: 10
+  #       precision: 2
+  # - platform: filter
+  #   name: "filtered realistic temperature"
+  #   entity_id: sensor.Temp
+  #   filters:
+  #     - filter: outlier
+  #       window_size: 10
+  #       radius: 2.0
+  #     - filter: lowpass
+  #       time_constant: 10
+  #     - filter: time_simple_moving_average
+  #       window_size: 00:05
+  #       precision: 2
+  # - platform: statistics
+  #   name: Bathroom Humidity Stats
+  #   entity_id: sensor.Humidity
+  #   sampling_size: 5  #todo change tasmota reporting interval.. increase sample sizes
 
 binary_sensor:
   - platform: template
     sensors:
-      bathroom_humidity_rising:
-        friendly_name: "Bathroom Humidity Rising"
+      bathroom_humidity_high:
+        friendly_name: "Bathroom Humidity High"
         value_template: >-
-          {{ (states.sensor.bathroom_humidity_stats_mean.attributes.max_value | float - states.sensor.bathroom_humidity_stats_mean.attributes.min_value | float) > 10 | int }}
+          {{ (sensor.bathroom_humidity_1 | float  ) - ( sensor.livingroom_humidity_1 | float )  > 10 | int }}
       bathroom_humidity_normal:
           friendly_name: "Bathroom Humidity Normal"
           value_template: >-
-            {{ (states.sensor.bathroom_humidity_stats_mean.attributes.max_value | float - states.sensor.bathroom_humidity_stats_mean.attributes.min_value | float) < 0.5 | int }}
+             {{ (sensor.bathroom_humidity_1 | float  ) - ( sensor.livingroom_humidity_1 | float )  < 10 | int }}
 
 xiaomi_aqara:
   discovery_retry: 10
@@ -192,10 +194,10 @@ light:
   - platform: yeelight
     devices:
       10.2.2.127:
-        name: Living Room
+        name: Table Light
         save_on_change: False #(defaults to True)
 
 
-group: !include groups.yaml
-automation: !include automations.yaml
+group: !include_dir_named groups
+automation: !include_dir_list automation
 script: !include scripts.yaml
