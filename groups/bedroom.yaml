@@ -1,0 +1,4 @@
+name: Bedroom
+entities:
+  - binary_sensor.bedroom_closet_motion_1
+  - switch.bedroom_closet_light_1

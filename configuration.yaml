@@ -147,12 +147,8 @@ binary_sensor:
       bathroom_humidity_high:
         friendly_name: "Bathroom Humidity High"
         value_template: >-
-          {{ (sensor.bathroom_humidity_1 | float  ) - ( sensor.livingroom_humidity_1 | float )  > 10 | int }}
-      bathroom_humidity_normal:
-          friendly_name: "Bathroom Humidity Normal"
-          value_template: >-
-             {{ (sensor.bathroom_humidity_1 | float  ) - ( sensor.livingroom_humidity_1 | float )  < 10 | int }}
-
+          {{ (( states('sensor.bathroom_humidity_1')|float  ) - (  states('sensor.livingroom_humidity_1')|float ))  > 10|int }}
+  
 xiaomi_aqara:
   discovery_retry: 10
   interface: !secret xiaomi_aqara_interface

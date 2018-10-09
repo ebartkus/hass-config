@@ -1,0 +1,8 @@
+# alias: Bathroom Fan Off
+# trigger:
+# - platform: state
+#   entity_id: binary_sensor.bathroom_humidity_high
+#   to: 'off'
+# action:
+#   service: homeassistant.turn_off
+#   entity_id: switch.bathroom_fan_1

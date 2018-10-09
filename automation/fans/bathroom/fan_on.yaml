@@ -1,0 +1,9 @@
+alias: Bathroom Fan On
+trigger:
+- platform: state
+  entity_id: binary_sensor.bathroom_humidity_high
+  to: 'on'
+action:
+  service: homeassistant.turn_on
+  entity_id: switch.bathroom_fan_1
+

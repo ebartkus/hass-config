@@ -1,0 +1,12 @@
+name: Bathroom
+control: hidden
+entities:
+  - switch.bathroom_fan_1
+  - switch.bathroom_light_1
+  - binary_sensor.bathroom_motion_aqara_1
+  - binary_sensor.bathroom_motion_fibaro_1
+  - binary_sensor.bathroom_water_leak_1
+  - binary_sensor.bathroom_door_1
+  - sensor.bathroom_humidity_1
+  - sensor.pressure_bathroom_1
+  - sensor.bathroom_temperature_1

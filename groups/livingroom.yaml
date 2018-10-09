@@ -1,0 +1,5 @@
+name: Living Room
+control: hidden
+entities:
+  - sensor.livingroom_temperature_1
+  - sensor.livingroom_humidity_1

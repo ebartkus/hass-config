@@ -1,0 +1,5 @@
+name: Outside
+entities:
+  - sensor.temperature_outside_1
+  - sensor.pressure_outside_1
+  - sensor.humidity_outside_1

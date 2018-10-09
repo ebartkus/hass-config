@@ -1,8 +1,12 @@
-*
-!*.yaml
+*.txt
+!_*.yaml
+!**\*.yaml
 !scenes
 !.gitignore
 secrets.yaml
 known_devices.yaml
-`
 ._*
+.*
+*.log
+*.xml
+tts/
